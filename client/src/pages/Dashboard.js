@@ -230,15 +230,24 @@ const Dashboard = () => {
         return;
       }
 
-      const [tasksRes, projectsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/tasks', {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get('http://localhost:5000/api/projects', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
+      // const [tasksRes, projectsRes] = await Promise.all([
+      //   axios.get('http://localhost:5000/api/tasks', {
+      //     headers: { Authorization: `Bearer ${token}` }
+      //   }),
+      //   axios.get('http://localhost:5000/api/projects', {
+      //     headers: { Authorization: `Bearer ${token}` }
+      //   })
+      // ]);
+const API = process.env.REACT_APP_API_URL;
 
+const [tasksRes, projectsRes] = await Promise.all([
+  axios.get(`${API}/tasks`, {
+    headers: { Authorization: `Bearer ${token}` }
+  }),
+  axios.get(`${API}/projects`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+]);
       const tasksData = tasksRes.data.tasks || [];
       const projectsData = projectsRes.data.projects || [];
 
